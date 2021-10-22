@@ -6,6 +6,9 @@ deploy:
 	docker build -t kubetest .
 	docker run -d --publish 8081:8080 --name kubetest_runner kubetest
 
+check:
+	curl localhost:8081
+	
 kill_all:
 	-docker container stop kubetest_runner
 	-docker container rm kubetest_runner
