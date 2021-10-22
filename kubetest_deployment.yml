@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubetest-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kubetest
+  template:
+    metadata:
+      labels:
+        app: kubetest
+    spec:
+      containers:
+        - name: kubetest-deployment-runner
+          image: kubetest
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: Never

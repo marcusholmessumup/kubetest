@@ -14,10 +14,20 @@ kill_all:
 	-docker container rm kubetest_runner
 	docker image rm kubetest
 
-start_pod:
+kube_up:
 	-minikube start
-	eval $(minikube docker-inv);docker build -t kubetest .
+	eval $(minikube docker-env);docker build -t kubetest .
+
+start_pod: kube_up
 	kubectl run kubetest-run --image=kubetest --image-pull-policy=Never
 
-kill_pod:
-	kubectl delete pod kubetest-run
+create_deployment: kube_up
+	kubectl create -f kubetest_deployment.yml
+
+create_job:
+	kubectl create -f kubetest_job.yml
+
+kill_kube:
+	-kubectl delete pod kubetest-run
+	-kubectl delete deployment kubetest-deploy
+	-kubectl delete job kubetest-job

@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata: 
+  name: kubetest-job
+spec:
+  template:
+    metadata:
+      name: kubetest-pod
+    spec:
+      containers:
+      - name: kubetest
+        image: kubetest
+        imagePullPolicy: Never
+      restartPolicy: OnFailure
